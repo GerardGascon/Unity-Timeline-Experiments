@@ -34,9 +34,8 @@ namespace TimelineExtensions {
 			serializedObject.Update();
 
 			SerializedProperty uniformEndValue = serializedObject.FindProperty("endStatus");
-			SerializedProperty uniformValue = uniformEndValue.FindPropertyRelative("uniformValue");
-			SerializedProperty x = uniformValue.FindPropertyRelative("x");
-			SerializedProperty y = uniformValue.FindPropertyRelative("y");
+			SerializedProperty x = uniformEndValue.FindPropertyRelative("x");
+			SerializedProperty y = uniformEndValue.FindPropertyRelative("y");
 
 			Vector2 editorResult = EditorGUILayout.Vector2Field(
 				"End Anchored Position",

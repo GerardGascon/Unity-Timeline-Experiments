@@ -74,3 +74,6 @@ crashlytics-build.properties
 # DOTween Pro
 /[Aa]ssets/Plugins/Demigiant
 /[Aa]ssets/Plugins/Demigiant.meta
+
+# JetBrains
+/.idea/

@@ -49,13 +49,12 @@ namespace TimelineExtensions
         public override void OnInspectorGUI()
         {
             SerializedProperty initValue = serializedObject.FindProperty("initStatus");
-            SerializedProperty uniformValue = initValue.FindPropertyRelative("uniformValue");
 
             GUI.color = Color.gray;
             EditorGUILayout.Vector2Field("Init Anchored Position",
                 new Vector2(
-                    uniformValue.FindPropertyRelative("x").floatValue,
-                    uniformValue.FindPropertyRelative("y").floatValue
+                    initValue.FindPropertyRelative("x").floatValue,
+                    initValue.FindPropertyRelative("y").floatValue
                 )
             );
             GUI.color = Color.white;
