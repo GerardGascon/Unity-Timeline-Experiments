@@ -9,8 +9,8 @@ namespace TimelineExtensions {
 	[TrackClipType(typeof(DOTweenClipRotation))]
 	public class DOTweenTrackTransform : DOTweenTrackBase<Transform> {
 		protected override void ProcessPlayable(Playable playable) {
-			ScriptPlayable<DOTweenMixerBase> basePlayable = (ScriptPlayable<DOTweenMixerBase>)playable;
-			DOTweenMixerBase mixer = basePlayable.GetBehaviour();
+			ScriptPlayable<DOTweenMixer> basePlayable = (ScriptPlayable<DOTweenMixer>)playable;
+			DOTweenMixer mixer = basePlayable.GetBehaviour();
 			if (mixer != null) { }
 
 			foreach (TimelineClip clip in GetClips()) {
