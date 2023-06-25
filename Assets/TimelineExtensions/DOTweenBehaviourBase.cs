@@ -1,10 +1,8 @@
-﻿using UnityEngine.Playables;
-using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine.Playables;
 
 namespace TimelineExtensions {
 	public class DOTweenBehaviourBase : PlayableBehaviour {
-		public Vector4 endStatus;
-		public AnimationCurve curve;
-		public double start, end;
+		public Tween tween;
 	}
 }

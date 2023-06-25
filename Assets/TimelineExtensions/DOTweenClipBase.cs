@@ -2,17 +2,17 @@ using UnityEngine.Playables;
 using UnityEngine;
 using DG.Tweening;
 using UnityEditor;
-using UnityEngine.Serialization;
 using UnityEngine.Timeline;
 
 namespace TimelineExtensions {
-	public abstract class DOTweenClipBase : PlayableAsset, ITimelineClipAsset {
+	public abstract class DOTweenClipBase<T> : PlayableAsset, ITimelineClipAsset {
 		
 		public ClipCaps clipCaps => ClipCaps.None;
 
 		public Vector4 endStatus;
-		public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 		public double start, end;
+
+		public T Target { set; get; }
 
 		public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) {
 			ScriptPlayable<DOTweenBehaviourBase> playable = ScriptPlayable<DOTweenBehaviourBase>.Create(graph);
@@ -22,33 +22,48 @@ namespace TimelineExtensions {
 			return playable;
 		}
 
-		protected virtual void ProcessPlayable(Playable playable) {
+		void ProcessPlayable(Playable playable) {
 			ScriptPlayable<DOTweenBehaviourBase> basePlayable = (ScriptPlayable<DOTweenBehaviourBase>)playable;
 			DOTweenBehaviourBase behaviour = basePlayable.GetBehaviour();
 
 			if (behaviour == null) return;
-			behaviour.endStatus = endStatus;
-			behaviour.curve = curve;
-			behaviour.start = start;
-			behaviour.end = end;
+			behaviour.tween = CreateTween(Target);
 		}
-
-		public abstract Tween CreateTween(Object target);
+		protected abstract Tween CreateTween(T target);
 	}
 
 #if UNITY_EDITOR
+	public class DOTweenClipBaseEditor<T> : Editor {
 
-	[CustomEditor(typeof(DOTweenClipBase))]
-	public class DOTweenClipBaseEditor : Editor {
+		T editorResult;
+		
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
 
-			SerializedProperty curve = serializedObject.FindProperty("curve");
-			curve.animationCurveValue = UnityEditor.EditorGUILayout.CurveField("Curve", curve.animationCurveValue);
+			SerializedProperty uniformEndValue = serializedObject.FindProperty("endStatus");
+			SerializedProperty x = uniformEndValue.FindPropertyRelative("x");
+			SerializedProperty y = uniformEndValue.FindPropertyRelative("y");
+			SerializedProperty z = uniformEndValue.FindPropertyRelative("z");
+			SerializedProperty w = uniformEndValue.FindPropertyRelative("w");
+
+			Vector4 result = editorResult switch {
+				float => new Vector4(EditorGUILayout.FloatField("End Anchored Position", x.floatValue), 0, 0, 0),
+				Vector2 => EditorGUILayout.Vector2Field("End Anchored Position",
+					new Vector4(x.floatValue, y.floatValue, z.floatValue, w.floatValue)),
+				Vector3 => EditorGUILayout.Vector3Field("End Anchored Position",
+					new Vector4(x.floatValue, y.floatValue, z.floatValue, w.floatValue)),
+				Vector4 => EditorGUILayout.Vector4Field("End Anchored Position",
+					new Vector4(x.floatValue, y.floatValue, z.floatValue, w.floatValue)),
+				_ => new Vector4()
+			};
+
+			x.floatValue = result.x;
+			y.floatValue = result.y;
+			z.floatValue = result.z;
+			w.floatValue = result.w;
 
 			serializedObject.ApplyModifiedProperties();
 		}
 	}
-
 #endif
 }
