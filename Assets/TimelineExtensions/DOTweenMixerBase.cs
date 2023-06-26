@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace TimelineExtensions {

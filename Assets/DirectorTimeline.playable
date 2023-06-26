@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DOTweenClipPosition(Clone)(Clone)
   m_EditorClassIdentifier: 
   endStatus: {x: 5, y: 5, z: 0, w: 0}
+  playbackMode: 0
   start: 6.083333333333333
   end: 11.083333333333332
 --- !u!114 &-5460052280721187787
@@ -220,10 +221,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.45
+    m_Start: 2.9833333333333334
     m_ClipIn: 0
     m_Asset: {fileID: 9182728913440149815}
-    m_Duration: 5
+    m_Duration: 5.083333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2697596231934991437}
     m_EaseInDuration: 0
@@ -303,6 +304,7 @@ MonoBehaviour:
   m_Name: DOTweenClipPosition
   m_EditorClassIdentifier: 
   endStatus: {x: 5, y: 0, z: 0, w: 0}
+  playbackMode: 0
   start: 0
   end: 5
 --- !u!114 &9182728913440149815
@@ -318,5 +320,6 @@ MonoBehaviour:
   m_Name: DOTweenClipRotation
   m_EditorClassIdentifier: 
   endStatus: {x: 0, y: 0, z: 360, w: 0}
-  start: 2.45
-  end: 7.45
+  playbackMode: 1
+  start: 2.9833333333333334
+  end: 8.066666666666666
